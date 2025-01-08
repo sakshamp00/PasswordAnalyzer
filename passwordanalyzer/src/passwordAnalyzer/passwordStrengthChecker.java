@@ -65,6 +65,35 @@ public class passwordStrengthChecker {
     return false;
   }
 
+  // following methods are from PasswordValidator.java
+  public String getPasswordStrengthLevel(String inputPassword) {
+    checkPassword(inputPassword);
+    int strengthScore = getScore();
+
+    if (strengthScore >= 50) {
+      return "High";
+    } else if (strengthScore >= 30) {
+      return "Medium";
+    } else if (strengthScore >= 20) {
+      return "Low";
+    } else
+      return "Invalid";
+  }
+
+  // public String validateForFrontend(String inputPassword) {
+  // strengthChecker.checkPassword(inputPassword);
+  // int strengthScore = strengthChecker.getScore();
+  // boolean isStrongEnough = strengthScore >= minimumStrengthScore;
+
+  // if (!isStrongEnough) {
+  // return "Password is not strong enough.";
+  // } else if (!inputPassword.equals(correctPassword)) {
+  // return "Password is incorrect.";
+  // }
+
+  // return "Password is valid and strong enough.";
+  // }
+
   public static void main(String[] args) {
     passwordStrengthChecker checker = new passwordStrengthChecker();
     String password = "Welcomee1$";
