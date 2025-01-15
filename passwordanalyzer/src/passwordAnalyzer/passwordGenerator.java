@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-public class PasswordGenerator { // At least 8 characters, 1 uppercase, 1 lowercase, 1 digit, 1 special character
+public class passwordGenerator { // At least 8 characters, 1 uppercase, 1 lowercase, 1 digit, 1 special character
     public static String generatePassword() {
         try {
             // Define character sets
