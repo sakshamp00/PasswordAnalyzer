@@ -1,14 +1,9 @@
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
-
-public class passwordGenerator { // At least 8 characters, 1 uppercase, 1 lowercase, 1 digit, 1 special character
+public class passwordGenerator {
     public static String generatePassword() {
         try {
             // Define character sets
             String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            String lowerCase = "abcdefghijklmnopqrstuvdxwz";
+            String lowerCase = "abcdefghijklmnopqrstuvwxyz";
             String numbers = "1234567890";
             String special = "!@#$%^&*()-_=+<>?/[]{}|~";
             String allCharacters = upperCase + lowerCase + numbers + special;
@@ -24,17 +19,15 @@ public class passwordGenerator { // At least 8 characters, 1 uppercase, 1 lowerc
             newPass.append(special.charAt(random.nextInt(special.length())));
 
             // Generate the remaining characters (password length: 8-20)
-            int passLength = random.nextInt(4, 20); // Add between 4 and 20 characters
+            int passLength = random.nextInt(13) + 8; // Password length between 8 and 20
 
-            for (int i = 0; i < passLength; i++) {
+            for (int i = 4; i < passLength; i++) { // Start from 4 as we already added 4 characters
                 newPass.append(allCharacters.charAt(random.nextInt(allCharacters.length())));
             }
 
-            String unshuffledPassword = newPass.toString();
-
             // Shuffle the characters for added randomness
             List<Character> chars = new ArrayList<>();
-            for (char c : unshuffledPassword.toCharArray()) {
+            for (char c : newPass.toString().toCharArray()) {
                 chars.add(c);
             }
             Collections.shuffle(chars, random);
