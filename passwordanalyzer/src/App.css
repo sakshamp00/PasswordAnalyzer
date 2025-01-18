@@ -1,114 +1,147 @@
-/* App.css */
-
-/* General Styles */
+/* Body Styling */
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #1a1a2e, #16213e);
-    color: #e8e8e8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #1c1c3c, #4e54c8, #8f94fb);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ffffff;
+  text-align: center;
 }
 
-/* Container */
+/* Gradient Animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Main Container */
 .container {
-    background: #1f4068;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.25);
-    width: 400px;
-    text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  width: 90%;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Headings */
 h1 {
-    color: #e94560;
-    margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #e1e1e1;
+  margin-bottom: 1rem;
 }
 
-h2 {
-    color: #00adb5;
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
-/* Inputs */
-input[type="text"], input[type="password"] {
-    width: 90%;
-    padding: 0.8rem;
-    margin: 0.5rem 0;
-    border: 2px solid #00adb5;
-    border-radius: 8px;
-    outline: none;
-    font-size: 1rem;
-    color: #e8e8e8;
-    background: #1a1a2e;
-    transition: border 0.3s;
+/* Input Styling */
+input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 2px solid #4e54c8;
+  outline: none;
+  font-size: 1rem;
+  color: #ffffff;
+  background: #2a2a72;
+  transition: 0.3s;
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
-    border-color: #e94560;
+input[type="text"]:focus {
+  border-color: #8f94fb;
+  box-shadow: 0px 0px 10px rgba(79, 84, 251, 0.6);
 }
 
 /* Buttons */
 button {
-    background: #00adb5;
-    color: #1a1a2e;
-    border: none;
-    padding: 0.8rem 1.2rem;
-    margin: 0.5rem 0;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 button:hover {
-    background: #e94560;
-    transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Password Strength Indicator */
-.password-strength {
-    margin: 1rem 0;
+button:disabled {
+  background: #555;
+  cursor: not-allowed;
 }
 
-.strength-bar {
-    height: 10px;
-    border-radius: 5px;
-    background: #16213e;
-    margin: 0.5rem 0;
-    overflow: hidden;
+/* Output Section */
+.output {
+  margin-top: 1.5rem;
+  background: #292929;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  color: #e1e1e1;
+  word-wrap: break-word;
 }
 
-.strength-bar span {
-    display: block;
-    height: 100%;
-    transition: width 0.3s;
-}
-
-.strength-bar.weak span {
-    width: 25%;
-    background: #ff4d4d;
-}
-
-.strength-bar.medium span {
-    width: 50%;
-    background: #ffaa00;
-}
-
-.strength-bar.strong span {
-    width: 100%;
-    background: #4caf50;
+strong {
+  color: #8f94fb;
+  font-weight: bold;
 }
 
 /* Footer */
-.footer {
-    margin-top: 1.5rem;
-    font-size: 0.8rem;
-    color: #a0a0a0;
+footer {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #a1a1a1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  button {
+    padding: 0.6rem 1.2rem;
+  }
 }
