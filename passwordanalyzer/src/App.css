@@ -1,62 +1,114 @@
 /* App.css */
+
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #1a1a2e, #16213e);
+    color: #e8e8e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
+/* Container */
 .container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #1f4068;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.25);
+    width: 400px;
+    text-align: center;
 }
 
+/* Headings */
 h1 {
-  font-size: 24px;
-  text-align: center;
-  color: #333;
+    color: #e94560;
+    margin-bottom: 1rem;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+h2 {
+    color: #00adb5;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
 }
 
-label {
-  font-weight: bold;
-  color: #555;
-}
-
+/* Inputs */
 input[type="text"], input[type="password"] {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+    width: 90%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: 2px solid #00adb5;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+    color: #e8e8e8;
+    background: #1a1a2e;
+    transition: border 0.3s;
 }
 
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #e94560;
+}
+
+/* Buttons */
 button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
+    background: #00adb5;
+    color: #1a1a2e;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-  background-color: #0056b3;
+    background: #e94560;
+    transform: scale(1.05);
 }
 
-.output {
-  margin-top: 20px;
-  padding: 10px;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+/* Password Strength Indicator */
+.password-strength {
+    margin: 1rem 0;
+}
+
+.strength-bar {
+    height: 10px;
+    border-radius: 5px;
+    background: #16213e;
+    margin: 0.5rem 0;
+    overflow: hidden;
+}
+
+.strength-bar span {
+    display: block;
+    height: 100%;
+    transition: width 0.3s;
+}
+
+.strength-bar.weak span {
+    width: 25%;
+    background: #ff4d4d;
+}
+
+.strength-bar.medium span {
+    width: 50%;
+    background: #ffaa00;
+}
+
+.strength-bar.strong span {
+    width: 100%;
+    background: #4caf50;
+}
+
+/* Footer */
+.footer {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: #a0a0a0;
 }
