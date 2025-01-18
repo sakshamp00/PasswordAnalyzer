@@ -3,26 +3,26 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        try { // ERROR HANDLING
+        try {
             System.out.println(
                     "Would you like to type in your own password? (Y for Yes, N if you'd like the system to generate one for you)");
-            String inputChoice = scanner.nextLine().toUpperCase(); // Normalize input to uppercase for consistency
+            String inputChoice = scanner.nextLine().toUpperCase();
             String newPassword = "";
-            boolean madePassword = false; // To keep track of when to end the password input loop
+            boolean madePassword = false;
 
             while (!madePassword) {
-                if (inputChoice.equals("Y")) { // User creates their own password
+                if (inputChoice.equals("Y")) {
                     System.out.println("Please enter a password:");
                     newPassword = scanner.nextLine();
                     System.out.println("Password: " + newPassword);
                     madePassword = true;
-                } else if (inputChoice.equals("N")) { // System creates password for user
+                } else if (inputChoice.equals("N")) {
                     newPassword = passwordGenerator.generatePassword();
                     System.out.println("Generated Password: " + newPassword);
                     madePassword = true;
                 } else {
                     System.out.println("Invalid choice. Please enter 'Y' for Yes or 'N' for No:");
-                    inputChoice = scanner.nextLine().toUpperCase(); // Update the input for the next iteration
+                    inputChoice = scanner.nextLine().toUpperCase();
                 }
             }
 
@@ -37,19 +37,16 @@ public class Main {
             String decryptedPassword = encryptor.decrypt(encryptedPassword);
             System.out.println("Decrypted Password: " + decryptedPassword);
 
-            System.out.print("Enter a password to validate: "); // yall can figure this part out because I'm not sure
-                                                                // what you're planning here, idk if you want like a
-                                                                // login system or what
+            System.out.print("Enter a password to validate: ");
             String inputPassword = scanner.nextLine();
-
-            // String validationMessage = strengthChecker.isStrongEnough(newPassword);
-            // System.out.println(validationMessage);
 
             System.out.println("Password Strength Level: " + strengthChecker.getPasswordStrengthLevel(inputPassword));
 
-        } catch (Exception e) { // ERROR HANDLING
+        } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
             e.printStackTrace();
+        } finally {
+            scanner.close();
         }
     }
 }
