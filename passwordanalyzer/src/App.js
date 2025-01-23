@@ -1,34 +1,22 @@
 import React, { useState } from "react";
 import "./App.css";
 
-function App() {
-  const [password, setPassword] = useState("");
-  const [key, setKey] = useState(null);
-  const [encryptedPassword, setEncryptedPassword] = useState("");
-  const [decryptedPassword, setDecryptedPassword] = useState("");
-
-  // Generate a cryptographic AES-GCM key
-  const generateKey = async () => {
-    const cryptoKey = await window.crypto.subtle.generateKey(
+// AES encryption utility functions
+const passwordEncryptor = {
+  async generateKey() {
+    return await window.crypto.subtle.generateKey(
       {
         name: "AES-GCM",
-        length: 128,
+        length: 128, // AES key length
       },
-      true,
+      true, // Can be exported
       ["encrypt", "decrypt"]
     );
-    setKey(cryptoKey);
-    alert("Encryption key generated successfully!");
-  };
+  },
 
-  // Encrypt the password
-  const encryptPassword = async () => {
-    if (!key) {
-      alert("Please generate a key first!");
-      return;
-    }
+  async encrypt(password, key) {
     try {
-      const iv = window.crypto.getRandomValues(new Uint8Array(12));
+      const iv = window.crypto.getRandomValues(new Uint8Array(12)); // Initialization Vector
       const encodedPassword = new TextEncoder().encode(password);
       const encrypted = await window.crypto.subtle.encrypt(
         {
@@ -39,28 +27,24 @@ function App() {
         encodedPassword
       );
 
-      // Encode IV and encrypted data into Base64
+      // Encode the encrypted data and IV to Base64
       const encryptedBase64 = btoa(
         String.fromCharCode(...new Uint8Array(encrypted))
       );
       const ivBase64 = btoa(String.fromCharCode(...iv));
-      setEncryptedPassword(`${encryptedBase64}:${ivBase64}`);
+      return `${encryptedBase64}:${ivBase64}`;
     } catch (error) {
       console.error("Encryption failed:", error);
-      alert("Failed to encrypt the password.");
+      throw new Error("Encryption error");
     }
-  };
+  },
 
-  // Decrypt the password
-  const decryptPassword = async () => {
-    if (!key) {
-      alert("Please generate a key first!");
-      return;
-    }
+  async decrypt(encryptedPassword, key) {
     try {
       const [encryptedData, iv] = encryptedPassword
         .split(":")
         .map((part) => Uint8Array.from(atob(part), (c) => c.charCodeAt(0)));
+
       const decrypted = await window.crypto.subtle.decrypt(
         {
           name: "AES-GCM",
@@ -69,10 +53,57 @@ function App() {
         key,
         encryptedData
       );
-      setDecryptedPassword(new TextDecoder().decode(decrypted));
+
+      return new TextDecoder().decode(decrypted);
     } catch (error) {
       console.error("Decryption failed:", error);
-      alert("Failed to decrypt the password.");
+      throw new Error("Decryption error");
+    }
+  },
+};
+
+function App() {
+  const [password, setPassword] = useState("");
+  const [key, setKey] = useState(null);
+  const [encryptedPassword, setEncryptedPassword] = useState("");
+  const [decryptedPassword, setDecryptedPassword] = useState("");
+
+  // Generate encryption key
+  const generateKey = async () => {
+    try {
+      const generatedKey = await passwordEncryptor.generateKey();
+      setKey(generatedKey);
+      alert("Encryption key generated successfully!");
+    } catch (error) {
+      alert("Error generating key.");
+    }
+  };
+
+  // Encrypt password using passwordEncryptor
+  const encryptPassword = async () => {
+    if (!key) {
+      alert("Please generate a key first!");
+      return;
+    }
+    try {
+      const encrypted = await passwordEncryptor.encrypt(password, key);
+      setEncryptedPassword(encrypted);
+    } catch (error) {
+      alert("Failed to encrypt password.");
+    }
+  };
+
+  // Decrypt password using passwordEncryptor
+  const decryptPassword = async () => {
+    if (!key) {
+      alert("Please generate a key first!");
+      return;
+    }
+    try {
+      const decrypted = await passwordEncryptor.decrypt(encryptedPassword, key);
+      setDecryptedPassword(decrypted);
+    } catch (error) {
+      alert("Failed to decrypt password.");
     }
   };
 
