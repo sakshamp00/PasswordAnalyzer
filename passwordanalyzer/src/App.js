@@ -9,7 +9,7 @@ const passwordEncryptor = {
         name: "AES-GCM",
         length: 128, // AES key length
       },
-      true, // Can be exported
+      true,
       ["encrypt", "decrypt"]
     );
   },
@@ -83,11 +83,28 @@ const generatePassword = () => {
   return password.split("").sort(() => Math.random() - 0.5).join("");
 };
 
+// Strength Checker function
+const checkPasswordStrength = (password) => {
+  let score = 0;
+
+  if (password.length >= 8) score += 10;
+  if (password.length >= 12) score += 10;
+  if (/[A-Z]/.test(password)) score += 10;
+  if (/[a-z]/.test(password)) score += 10;
+  if (/[0-9]/.test(password)) score += 10;
+  if (/[^A-Za-z0-9]/.test(password)) score += 10;
+
+  if (score >= 50) return "Strong";
+  if (score >= 30) return "Medium";
+  return "Weak";
+};
+
 function App() {
   const [password, setPassword] = useState("");
   const [key, setKey] = useState(null);
   const [encryptedPassword, setEncryptedPassword] = useState("");
   const [decryptedPassword, setDecryptedPassword] = useState("");
+  const [strength, setStrength] = useState("");
 
   // Generate encryption key
   const generateKey = async () => {
@@ -128,6 +145,13 @@ function App() {
     }
   };
 
+  // Handle password input changes and update strength
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setStrength(checkPasswordStrength(newPassword));
+  };
+
   return (
     <div className="container">
       <h1>Password Manager</h1>
@@ -137,9 +161,12 @@ function App() {
           type="text"
           id="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           placeholder="Type your password here"
         />
+        <p className={`strength ${strength.toLowerCase()}`}>
+          Strength: {strength}
+        </p>
         <div className="buttons">
           <button onClick={generateKey}>Generate Key</button>
           <button onClick={encryptPassword} disabled={!password}>
@@ -149,7 +176,11 @@ function App() {
             Decrypt Password
           </button>
           <button
-            onClick={() => setPassword(generatePassword())}
+            onClick={() => {
+              const generated = generatePassword();
+              setPassword(generated);
+              setStrength(checkPasswordStrength(generated));
+            }}
             className="generate-btn"
           >
             Generate Password
