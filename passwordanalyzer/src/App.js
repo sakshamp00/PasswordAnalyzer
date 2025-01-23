@@ -62,6 +62,27 @@ const passwordEncryptor = {
   },
 };
 
+// Password Generator function
+const generatePassword = () => {
+  const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const lowerCase = "abcdefghijklmnopqrstuvwxyz";
+  const numbers = "0123456789";
+  const specialChars = "!@#$%^&*()_+[]{}<>?";
+  const allCharacters = upperCase + lowerCase + numbers + specialChars;
+
+  let password = "";
+  password += upperCase[Math.floor(Math.random() * upperCase.length)];
+  password += lowerCase[Math.floor(Math.random() * lowerCase.length)];
+  password += numbers[Math.floor(Math.random() * numbers.length)];
+  password += specialChars[Math.floor(Math.random() * specialChars.length)];
+
+  for (let i = 4; i < 12; i++) {
+    password += allCharacters[Math.floor(Math.random() * allCharacters.length)];
+  }
+
+  return password.split("").sort(() => Math.random() - 0.5).join("");
+};
+
 function App() {
   const [password, setPassword] = useState("");
   const [key, setKey] = useState(null);
@@ -126,6 +147,12 @@ function App() {
           </button>
           <button onClick={decryptPassword} disabled={!encryptedPassword}>
             Decrypt Password
+          </button>
+          <button
+            onClick={() => setPassword(generatePassword())}
+            className="generate-btn"
+          >
+            Generate Password
           </button>
         </div>
       </div>
